@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'sales/style.css' %}">
+    <script rel="stylesheet" type="text/javascript" href="{% static 'sales/scripts.js' %}"></script>
+  </head>
+  <body>
+    <h1>Sale Entry Form</h1>
+    {% if messages %}
+    <div id="messages_container">
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% block content %}
+      <h2>Form</h2>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" value ="Add" name='add'>Add</button>
+        <button type="submit" value="Submit" name='submit'>Submit</button>
+      </form>
+    {% endblock %}
+  </body>
+</html>

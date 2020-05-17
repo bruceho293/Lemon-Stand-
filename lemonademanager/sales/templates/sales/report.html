@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'sales/style.css' %}">
+  <body>
+    {% block content %}
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit' value='Submit'>Get Report</button>
+      </form>
+
+      {% if sales_report %}
+      <table class='sales_report'>
+        <thead>
+          <td>Date</td><td>Items Sold</td><td>Price</td><td>Commission</td>
+        </thead>
+
+        {% for sale in sales_report %}
+        <tr>
+          <td>{{ sale.date_sale }}</td>
+          <td>{{ sale.quantity }} {{ sale.product_id }}</td>
+          <td>$ {{ sale.get_price }}</td>
+          <td>$ {{ sale.get_staff_commission }}</td>
+        </tr>
+        {% endfor %}
+        <tend>
+          <td>Totals:</td><td></td><td>$ {{ total_overall_price }}</td><td>$ {{ total_overall_commission }}</td>
+        </tend>
+      </table>
+      {% endif %}
+    {% endblock %}
+    </body>
+</html>
