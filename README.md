@@ -2,9 +2,7 @@
 ## Description
 This is a sales tracking and reporting system to help manage the incredible amounts of lemonade the staffs sell on a daily basis, and automatically calculate appropriate commissions for each hard-working sales staff.
 ## Design
-![alt text][desgin]
-
-[design]: https://github.com/bruceho293/Lemon-Stand-/blob/master/ER%20Diagram.png
+![alt text][https://github.com/bruceho293/Lemon-Stand-/blob/master/ER%20Diagram.png]
 ## How to run the project
 - Install Python 3+ from [Python official download website](https://www.python.org/downloads/)
 - Upgrade `pip` to the latest version. 
