@@ -16,7 +16,7 @@ def form(request):
     if(request.method == "POST"):
         form = SalesForm(request.POST)
         if form.is_valid():
-            messages.success(request, "Sale submission success.")
+            messages.success(request, "Sale submission successfully.")
             form.save()
             return redirect("sales:form")
 
@@ -29,6 +29,11 @@ def report(request):
     context = {}
     if(request.method == "POST"):
         form = ReportForm(request.POST)
+        context = {'form': form}
+
+        # If the form is valid, get the history of the sales of that staff
+        # with staff_id and in range of start_date and end_date
+        #  (start_date <= dates in history <= end_date)
         if form.is_valid():
             staff_id = form.cleaned_data['staff_id']
             start_date = form.cleaned_data['start_date']
@@ -39,6 +44,8 @@ def report(request):
                 date_sale__lte=end_date,
             ).order_by("date_sale")
 
+            # Retrieve the overall price of all items
+            # and the overall commission the staff earns
             total_overall_price = 0
             total_overall_commission = 0
             for sale in sales_report:

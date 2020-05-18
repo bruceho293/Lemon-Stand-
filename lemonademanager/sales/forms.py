@@ -30,5 +30,7 @@ class ReportForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(ReportForm, self).clean()
+        print(cleaned_data.get('start_date'))
+        print(cleaned_data.get('end_date'))
         if cleaned_data.get('start_date') > cleaned_data.get('end_date'):
             raise ValidationError("Impossible date range.")

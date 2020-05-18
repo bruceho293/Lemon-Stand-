@@ -4,12 +4,23 @@
   <link rel="stylesheet" type="text/css" href="{% static 'sales/style.css' %}">
   <body>
     {% block content %}
+      <div id="messages_container">
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+      </div>
+
+      <!--
+        Form Template
+      -->
       <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type='submit' value='Submit'>Get Report</button>
       </form>
-
+    <a href="{% url 'sales:index' %}">Go back to the index page</a>
       {% if sales_report %}
       <table class='sales_report'>
         <thead>
