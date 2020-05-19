@@ -21,6 +21,7 @@
       <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        <!-- button `Add` is not supported yet-->
         <button type="submit" value ="Add" name='add'>Add</button>
         <button type="submit" value="Submit" name='submit'>Submit</button>
       </form>

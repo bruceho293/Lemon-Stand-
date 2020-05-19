@@ -48,9 +48,13 @@ def report(request):
             # and the overall commission the staff earns
             total_overall_price = 0
             total_overall_commission = 0
+
+            # modified_sale_report = []
+
             for sale in sales_report:
                 total_overall_price += Decimal(sale.get_price)
                 total_overall_commission += Decimal(sale.get_staff_commission)
+
 
             context = {
                 'form': form,

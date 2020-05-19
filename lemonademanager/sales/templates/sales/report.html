@@ -35,6 +35,16 @@
           <td>$ {{ sale.get_staff_commission }}</td>
         </tr>
         {% endfor %}
+
+        <!-- {% for modified_sale in modified_sale_report %}
+        <tr>
+          <td> {{ modified_sale.date }} </td>
+          <td> {{ modified_sale.list_of_products }} </td>
+          <td> {{ modified_sale.total_price }} </td>
+          <td> {{ modified_sale.commission }} </td>
+        </tr>
+        {% endfor %} -->
+
         <tend>
           <td>Totals:</td><td></td><td>$ {{ total_overall_price }}</td><td>$ {{ total_overall_commission }}</td>
         </tend>

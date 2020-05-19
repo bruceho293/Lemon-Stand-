@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Sale, Staff
+from datetime import datetime
 
 class SalesForm(forms.ModelForm):
     class Meta:
@@ -18,8 +19,8 @@ class SalesForm(forms.ModelForm):
             raise ValidationError("Cannot submit a Sale with no items")
 
 class ReportForm(forms.ModelForm):
-    start_date = forms.DateTimeField()
-    end_date = forms.DateTimeField()
+    start_date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': "YYYY-MM-DD"}))
+    end_date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': "YYYY-MM-DD"}))
 
     class Meta:
         model = Sale

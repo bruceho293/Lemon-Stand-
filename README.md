@@ -14,7 +14,7 @@ This is a sales tracking and reporting system to help manage the incredible amou
     - For Windows: `pip install virtualenv` and `pip install virtualenvwrapper-win`.
 - Clone the repository to your work directory.
 - Make a virtual environment by typing `mkvirtualenv <your_virtualenv_name>`, then type `workon <your_virtualenv_name>`
-- Then change directory to `/<your_work_directory/lemonademanager` and run `python manage.py runserver`
+- Then change directory to `/<your_work_directory/Lemon-Stand-/lemonademanager` and run `python manage.py runserver`
 - For full instructions on how to download Django, visit [Django's instalation](https://docs.djangoproject.com/en/3.0/intro/install/)
 ## Pages
 - Admin Page        : `http://localhost:8000/admin/` (Use `admin` as the username and password)
