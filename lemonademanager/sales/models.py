@@ -20,7 +20,7 @@ class LemonadeProduct(models.Model):
     price = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self):
-        return "{} (ID: {})".format(self.name, self.id)
+        return "{}".format(self.name)
 
 class Commission(models.Model):
     sale_commission = models.DecimalField(max_digits=4, decimal_places=2)
@@ -48,4 +48,4 @@ class Sale(models.Model):
     @property
     def get_staff_commission(self):
         commission = Commission.objects.filter(staff=self.staff_id, date_applied__lte=self.date_sale).latest('date_applied')
-        return "%.2f" % (self.product_id.price * self.quantity / commission.sale_commission)
+        return "%.2f" % (self.product_id.price * self.quantity * (commission.sale_commission / 100))
