@@ -24,3 +24,4 @@ This is a sales tracking and reporting system to help manage the incredible amou
 ## Limitation
 There are a lot of room for improventments in the project.
 - In the Sale Entry Page, you can only submit one type of product for each sale.
+- The design for the database is still suboptimal. (Need a better design to handle sale and commission)
