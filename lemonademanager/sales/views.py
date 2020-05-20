@@ -51,6 +51,7 @@ def report(request):
             modified_sale_report = []
             no_history_message = ""
 
+            # Modifying the report
             if sales_report:
                 sale_dict = {}
                 first_sale = sales_report[0]
@@ -78,8 +79,11 @@ def report(request):
                             temp_sale['total_price'] = Decimal(sale.get_price)
                             temp_sale['commission'] = Decimal(sale.get_staff_commission)
                             modified_sale_report.append(temp_sale)
+
+            # If there's no records, print the notification message
             else:
                 no_history_message = "There's no records for this staff between the given times."
+
             context = {
                 'form': form,
                 # 'sales_report': sales_report,

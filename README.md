@@ -3,6 +3,7 @@
 This is a sales tracking and reporting system to help manage the incredible amounts of lemonade the staffs sell on a daily basis, and automatically calculate appropriate commissions for each hard-working sales staff.
 ## Design
 ![Diagram](/images/ER_Diagram.png)
+- `Commission` : Keep check of the commissions updated for each staff in the company. With the design, it is beneficial when retrieving the report of sales of the staffs.
 ## How to run the project
 - Install Python 3+ from [Python official download website](https://www.python.org/downloads/)
 - Upgrade `pip` to the latest version.

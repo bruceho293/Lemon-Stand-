@@ -5,6 +5,8 @@ from .models import Sale, Staff
 from datetime import datetime
 
 class SalesForm(forms.ModelForm):
+    # error_css_class = "error"
+
     class Meta:
         model = Sale
         fields = ['staff_id', 'product_id', 'quantity']
@@ -16,6 +18,7 @@ class SalesForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(SalesForm, self).clean()
         if cleaned_data.get('quantity') <= 0:
+            self.fields['quantity'].widget.attrs['class'] = "error"
             raise ValidationError("Cannot submit a Sale with no items")
 
 class ReportForm(forms.ModelForm):
