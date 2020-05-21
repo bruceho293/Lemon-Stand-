@@ -4,6 +4,7 @@ This is a sales tracking and reporting system to help manage the incredible amou
 ## Design
 ![Diagram](/images/ER_Diagram.png)
 - `Commission` : Keep check of the commissions updated for each staff in the company. With the design, it is beneficial when retrieving the report of sales of the staffs.
+- Note: The key of Commission should include `date_applied` as well.
 ## How to run the project
 - Install Python 3+ from [Python official download website](https://www.python.org/downloads/)
 - Upgrade `pip` to the latest version.
