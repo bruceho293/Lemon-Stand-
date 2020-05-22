@@ -19,6 +19,10 @@ class LemonadeProduct(models.Model):
     name = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=20, decimal_places=2)
 
+    @property
+    def get_price(self):
+        return self.price
+
     def __str__(self):
         return "{}".format(self.name)
 

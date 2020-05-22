@@ -24,17 +24,9 @@
       {% if modified_sale_report %}
       <table class='sales_report'>
         <thead>
-          <td>Date</td><td>Items Sold</td><td>Price</td><td>Commission</td>
+          <tr><td>Date</td><td>Items Sold</td><td>Price</td><td>Commission</td></tr>
         </thead>
 
-        <!-- {% for sale in sales_report %}
-        <tr>
-          <td>{{ sale.date_sale }}</td>
-          <td>{{ sale.quantity }} {{ sale.product_id }}</td>
-          <td>$ {{ sale.get_price }}</td>
-          <td>$ {{ sale.get_staff_commission }}</td>
-        </tr>
-        {% endfor %} -->
 
         {% for modified_sale in modified_sale_report %}
         <tr>
@@ -46,7 +38,7 @@
         {% endfor %}
 
         <tend>
-          <td>Totals:</td><td></td><td>$ {{ total_overall_price }}</td><td>$ {{ total_overall_commission }}</td>
+          <tr><td>Totals:</td><td></td><td>$ {{ total_overall_price }}</td><td>$ {{ total_overall_commission }}</td></tr>
         </tend>
       </table>
       {% else %}
