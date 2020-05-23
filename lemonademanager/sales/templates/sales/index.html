@@ -1,12 +1,9 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-  <link rel="stylesheet" type="text/css" href="{% static 'sales/css/style.css' %}">
-  <body>
-    <h1>Sales</h1>
-    <ul>
-      <li><a href="{% url 'sales:form' %}">Sale Entry Form</a></li>
-      <li><a href="{% url 'sales:report' %}">Sale Report</a></li>
-    </ul>
-  </body>
-</html>
+{% extends "sales/base.html" %}
+
+{% block title %} My Sale Manager {% endblock %}
+{% block sidebar %}
+  <ul>
+    <li><a href="{% url 'sales:form' %}">Sale Entry Form</a></li>
+    <li><a href="{% url 'sales:report %'}"> Sale Report</a></li>
+  </ul>
+{% endblock sidebar %}

@@ -1,0 +1,34 @@
+[
+  {
+    "model": "sales.lemonadeproduct",
+    "pk": 1,
+    "fields": {
+      "name": "Fresh Lemon Lemonade",
+      "price": 1.50
+    }
+  },
+  {
+    "model": "sales.lemonadeproduct",
+    "pk": 2,
+    "fields": {
+      "name": "Orange & Lemon Splash",
+      "price": 2.00
+    }
+  },
+  {
+    "model": "sales.lemonadeproduct",
+    "pk": 3,
+    "fields": {
+      "name": "Sugary Shocker",
+      "price": 3.00
+    }
+  },
+  {
+    "model": "sales.lemonadeproduct",
+    "pk": 4,
+    "fields": {
+      "name": "Wild Whiskey Whack",
+      "price": 5.50
+    }
+  }
+]

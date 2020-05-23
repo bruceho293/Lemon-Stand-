@@ -13,7 +13,7 @@ def index(request):
     return render(request, 'sales/index.html')
 
 def form(request):
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = SalesForm(request.POST)
         if form.is_valid():
             messages.success(request, "Sale submission successfully.")
@@ -27,7 +27,7 @@ def form(request):
 
 def report(request):
     context = {}
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = ReportForm(request.POST)
         context = {'form': form}
 

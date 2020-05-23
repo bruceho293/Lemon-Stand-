@@ -7,7 +7,7 @@ urlpatterns = [
     # ex: /salesystem/
     path('', views.index, name='index'),
     # ex: /salesystem/sales/form/
-    path('form', views.form, name='form'),
+    path('form/', views.form, name='form'),
     # ex: /salesystem/sales/reports
-    path('report', views.report, name='report')
+    path('report/', views.report, name='report')
 ]

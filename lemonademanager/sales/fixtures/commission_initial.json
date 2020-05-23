@@ -1,0 +1,38 @@
+[
+  {
+    "model": "sales.commission",
+    "pk": 1,
+    "fields": {
+      "sale_commission": 10,
+      "date_applied": "2020-21-05",
+      "staff": "Jeff Terry"
+    }
+  },
+  {
+    "model": "sales.commission",
+    "pk": 2,
+    "fields": {
+      "sale_commission": 20,
+      "date_applied": "2020-21-05",
+      "staff": "Thomas Black"
+    }
+  },
+  {
+    "model": "sales.commission",
+    "pk": 3,
+    "fields": {
+      "sale_commission": 5,
+      "date_applied": "2020-21-05",
+      "staff": "John Rice"
+    }
+  },
+  {
+    "model": "sales.commission",
+    "pk": 4,
+    "fields": {
+      "sale_commission": 0,
+      "date_applied": "2020-21-05",
+      "staff": "Larry Long"
+    }
+  }
+]
