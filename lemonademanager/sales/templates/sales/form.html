@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html>
-  {% load static %}
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'sales/css/style.css' %}">
-    <script rel="stylesheet" type="text/javascript" src="{% static 'sales/javascript/scripts.js' %}"></script>
-  </head>
-  <body>
-    <h1>Sale Entry Form</h1>
-    {% if messages %}
+{% extends "sales/base.html" %}
+{% block title %} Sale Entry Form {% endblock title %}
+{% block content %}
+  {% if messages %}
     <div id="messages_container">
-      <ul class="messages">
-          {% for message in messages %}
+    <ul class="messages">
+        {% for message in messages %}
           <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-          {% endfor %}
-      </ul>
+        {% endfor %}
+    </ul>
     </div>
-    {% endif %}
-    {% block content %}
-      <h2>Form</h2>
-      <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <!-- button `Add` is not supported yet-->
-        <!-- <button type="submit" value ="Add" name='add'>Add</button> -->
-        <button type="submit" value="Submit" name='submit'>Submit</button>
-      </form>
-      <!-- <p>Total price: {{ form.product_id.get_price  }}</p> -->
-    {% endblock %}
-    <a href="{% url 'sales:index' %}">Go back to the index page</a>
-  </body>
-</html>
+  {% endif %}
+
+  <h2>Form</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <!-- button `Add` is not supported yet-->
+    <!-- <button type="submit" value ="Add" name='add'>Add</button> -->
+    <button type="submit" value="Submit" name='submit'>Submit</button>
+  </form>
+  <!-- <p>Total price: {{ form.product_id.get_price  }}</p> -->
+  <a href="{% url 'sales:index' %}">Go back to the index page</a>
+{% endblock content %}

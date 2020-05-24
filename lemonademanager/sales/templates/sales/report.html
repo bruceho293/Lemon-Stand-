@@ -1,49 +1,45 @@
-<!DOCTYPE html>
-<html>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'sales/css/style.css' %}">
-  <body>
-    {% block content %}
-      <div id="messages_container">
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-      </div>
+{% extends "sales/base.html" %}
 
-      <!--
-        Form Template
-      -->
-      <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type='submit' value='Submit'>Get Report</button>
-      </form>
-    <a href="{% url 'sales:index' %}">Go back to the index page</a>
-      {% if modified_sale_report %}
-      <table class='sales_report'>
-        <thead>
-          <tr><td>Date</td><td>Items Sold</td><td>Price</td><td>Commission</td></tr>
-        </thead>
-
-
-        {% for modified_sale in modified_sale_report %}
-        <tr>
-          <td> {{ modified_sale.date }} </td>
-          <td> {{ modified_sale.list_of_products }} </td>
-          <td>$ {{ modified_sale.total_price }} </td>
-          <td>$ {{ modified_sale.commission }} </td>
-        </tr>
+{% block title %} Sale Report {% endblock %}
+{% block content %}
+  <div id="messages_container">
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
+    </ul>
+  </div>
 
-        <tend>
-          <tr><td>Totals:</td><td></td><td>$ {{ total_overall_price }}</td><td>$ {{ total_overall_commission }}</td></tr>
-        </tend>
-      </table>
-      {% else %}
-      <h3> {{ no_history_message }} </h3>
-      {% endif %}
-    {% endblock %}
-    </body>
-</html>
+  <!--
+    Form Template
+  -->
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit' value='Submit'>Get Report</button>
+  </form>
+  <a href="{% url 'sales:index' %}">Go back to the index page</a>
+  {% if modified_sale_report %}
+  <table class='sales_report'>
+    <thead>
+      <tr><td>Date</td><td>Items Sold</td><td>Price</td><td>Commission</td></tr>
+    </thead>
+
+
+    {% for modified_sale in modified_sale_report %}
+    <tr>
+      <td> {{ modified_sale.date }} </td>
+      <td> {{ modified_sale.list_of_products }} </td>
+      <td>$ {{ modified_sale.total_price }} </td>
+      <td>$ {{ modified_sale.commission }} </td>
+    </tr>
+    {% endfor %}
+
+    <tend>
+      <tr><td>Totals:</td><td></td><td>$ {{ total_overall_price }}</td><td>$ {{ total_overall_commission }}</td></tr>
+    </tend>
+  </table>
+  {% else %}
+  <h3> {{ no_history_message }} </h3>
+  {% endif %}
+{% endblock content %}
