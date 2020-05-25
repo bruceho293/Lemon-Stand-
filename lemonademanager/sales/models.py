@@ -10,7 +10,7 @@ class Staff(models.Model):
     # Get the current (latest) commission the staff has at the moment
     @property
     def current_commission(self):
-        return Commission.objects.filter(pk=self.pk).order_by('-date_applied').latest().sale_commission
+        return Commission.objects.filter(staff=self).latest('date_applied').sale_commission
 
     def __str__(self):
         return "{} (ID: {})".format(self.name, self.id)
@@ -47,9 +47,11 @@ class Sale(models.Model):
     @property
     def get_price(self):
         return "%.2f" % (self.product_id.price * self.quantity)
+        # return self.product_id.price * self.quantity
 
     # Get the commission of the staff from this sale based on the corresponding commission and the date of the sale.
     @property
     def get_staff_commission(self):
         commission = Commission.objects.filter(staff=self.staff_id, date_applied__lte=self.date_sale).latest('date_applied')
         return "%.2f" % (self.product_id.price * self.quantity * (commission.sale_commission / 100))
+        # return self.product_id.price * self.quantity * (commission.sale_commission / 100)
