@@ -37,7 +37,6 @@ class SaleModelTestCase(TestCase):
 
         sale_2 = Sale(staff_id=staff, product_id=product, quantity=2)
         one_week = timezone.now() + datetime.timedelta(days=7)
-        sale_2.save()
         sale_2.date_sale = one_week
         sale_2.save()
 
@@ -47,14 +46,14 @@ class SaleModelTestCase(TestCase):
 
         staff = Staff.objects.get(name="C")
 
-        first_commission = create_commission(10, 0, staff)
+        first_commission = create_commission(10, -1, staff)
         first_commission.save()
 
-        self.assertEquals(test_sale_1.get_staff_commission, "2")
-        self.assertEquals(test_sale_2.get_staff_commission, "4")
+        self.assertEquals(test_sale_1.get_staff_commission, "2.00")
+        self.assertEquals(test_sale_2.get_staff_commission, "4.00")
 
-        second_commission = create_commission(20, 7, staff)
+        second_commission = create_commission(20, 5, staff)
         second_commission.save()
 
-        self.assertEquals(test_sale_1.get_staff_commission, "2")
-        self.assertEquals(test_sale_2.get_staff_commission, "8")
+        self.assertEquals(test_sale_1.get_staff_commission, "2.00")
+        self.assertEquals(test_sale_2.get_staff_commission, "4.00")
