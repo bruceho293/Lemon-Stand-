@@ -36,3 +36,8 @@ class ReportForm(forms.ModelForm):
         cleaned_data = super(ReportForm, self).clean()
         if cleaned_data.get('start_date') > cleaned_data.get('end_date'):
             raise ValidationError("Impossible date range.")
+
+class SecondSalesForm(forms.Form):
+    staff_id = forms.DecimalField(max_digits=9, decimal_places=0);
+    product = forms.CharField(max_length=30);
+    quantity = forms.IntegerField();
