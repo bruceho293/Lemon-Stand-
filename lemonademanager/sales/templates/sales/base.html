@@ -1,14 +1,14 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="{% static 'sales/css/style.css' %}">
-    <script src="{% static 'sales/javascript/scripts.js' %}"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <title>{% block title %}My amazing site{% endblock %}</title>
-</head>
+  <head>
+      <script src="{% static 'sales/javascript/scripts.js' %}"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'sales/css/style.css' %}">
+      <title>{% block title %}My amazing site{% endblock %}</title>
+  </head>
 
-<body>
+  <body>
     <div id="sidebar">
         {% block sidebar %}
         {% endblock %}
@@ -18,5 +18,13 @@
         {% block content %}
         {% endblock %}
     </div>
-</body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script rel="text/javascript">
+      $(document).ready(function(){
+        {% block javascript %}
+        {% endblock %}
+      });
+    </script>
+  </body>
 </html>

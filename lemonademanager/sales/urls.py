@@ -9,5 +9,9 @@ urlpatterns = [
     # ex: /salesystem/sales/form/
     path('form/', views.form, name='form'),
     # ex: /salesystem/sales/reports
-    path('report/', views.report, name='report')
+    path('report/', views.report, name='report'),
+
+    path('form/add/', views.add, name='addSale'),
+
+    path('form/remove/', views.remove, name='removeSale'),
 ]

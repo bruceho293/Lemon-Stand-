@@ -38,6 +38,6 @@ class ReportForm(forms.ModelForm):
             raise ValidationError("Impossible date range.")
 
 class SecondSalesForm(forms.Form):
-    staff_id = forms.DecimalField(max_digits=9, decimal_places=0);
+    staff_id = forms.ModelChoiceField(label="Staff ID", queryset=Staff.objects.all());
     product = forms.CharField(max_length=30);
     quantity = forms.IntegerField();

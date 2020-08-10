@@ -3,5 +3,16 @@ body {
 }
 
 .error {
-    background-color:  #ffcccb;
+  background-color:  #ffcccb;
+}
+
+.rowDiv {
+  width: 100%;
+  display: block;
+}
+
+.colDiv {
+  float: left;
+  width: 50%;
+  display: inline-block;
 }

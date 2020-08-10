@@ -2,24 +2,77 @@
 {% block title %} Sale Entry Form {% endblock title %}
 
 {% block content %}
-  {% if messages %}
-    <div id="messages_container">
-    <ul class="messages">
-        {% for message in messages %}
-          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    </div>
-  {% endif %}
+  <div class="rowDiv">
+    <div class="colDiv">
+      {% if messages %}
+        <div id="messages_container">
+        <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        </div>
+      {% endif %}
 
-  <h2>Form</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <!-- button `Add` is not supported yet-->
-    <!-- <button type="submit" value ="Add" name='add'>Add</button> -->
-    <button class="btn btn-primary" type="submit" value="Submit" name='submit'>Submit</button>
-  </form>
-  <!-- <p>Total price: {{ form.product_id.get_price  }}</p> -->
-  <a href="{% url 'sales:index' %}">Go back to the index page</a>
+      <h2>Form</h2>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button id="add_button" class="btn btn-primary" type="button">Add</button>
+        <button class="btn btn-primary" type="submit" name="button" value="Submit">Submit</button>
+      </form>
+      <a href="{% url 'sales:index' %}">Go back to the index page</a>
+    </div>
+
+    <div class="colDiv">
+      <p id="ajax_text">Cart</p>
+      <ul id="sale_list">
+        <!-- Enter the list of product -->
+      </ul>
+    </div>
+  </div>
 {% endblock content %}
+
+{% block javascript %}
+    $('#add_button').click(function(){
+          var product_id = $('#id_product_id').children("option:selected").val();
+          var quantity = $('#id_quantity').val();
+
+          $.ajax(
+          {
+              type:"GET",
+              url: "{% url 'sales:addSale' %}",
+              data: {
+                product_id: product_id,
+                quantity: quantity,
+              },
+              success: function(response)
+              {
+                $("#sale_list").append(
+                  '<li>' + response.quantity + ' ' + response.product
+                    + '<button type="button" class="close" aria-label="Close" data-id="'
+                    + response.id + '"><span aria-hidden="true">&times;</span></button>'
+                    + '</li>'
+                  );
+              },
+           });
+    });
+
+    $('#sale_list').on('click', 'button.close', function(event){
+        event.stopPropagation();
+        var dataId = $(this).data("id");
+
+        $.ajax({
+          type:"GET",
+          url: "{% url 'sales:removeSale' %}",
+          data: {
+            id: dataId,
+          },
+          success: function(id)
+          {
+            $('.close[data-id="' + id + '"]').parent().remove();
+          },
+        });
+    });
+{% endblock javascript %}

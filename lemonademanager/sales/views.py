@@ -1,13 +1,35 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.db.models import Sum
 
 from .models import LemonadeProduct, Sale
-from .forms import SalesForm, ReportForm
+from .forms import SalesForm, ReportForm, SecondSalesForm
 from decimal import Decimal
 # Create your views here.
 
+class SaleList:
+    def __init__(self):
+        self.list = []
+        self.id = 0
+
+    def appendSale(self, pid, count):
+        self.list.append({'id': self.id, 'product_id': pid, "quantity": count})
+        self.id = self.id + 1
+
+    def clearSales(self):
+        self.id = 0;
+        self.list.clear();
+
+    def toListRepresentation(self):
+        return self.list;
+
+    def removeSale(self, id):
+        for sale in self.list:
+            if sale.get("id") == id:
+                self.list.remove(sale)
+
+goba_sale_list = SaleList();
 
 def index(request):
     return render(request, 'sales/index.html')
@@ -18,12 +40,47 @@ def form(request):
         if form.is_valid():
             messages.success(request, "Sale submission successfully.")
             form.save()
-            return redirect("sales:form")
+            staff_id = form.cleaned_data['staff_id']
+            sales = goba_sale_list.toListRepresentation()
 
+            for sale in sales:
+                product_id = sale.get('product_id')
+                product_ins = LemonadeProduct.objects.get(pk=product_id)
+                quantity = sale.get('quantity')
+                s = Sale(staff_id=staff_id, product_id=product_ins, quantity=quantity)
+                s.save()
+
+            return redirect("sales:form")
     else:
         form = SalesForm()
 
+    goba_sale_list.clearSales()
+
     return render(request, 'sales/form.html', {'form': form})
+
+def add(request):
+    if request.method == "GET":
+        product_id = request.GET.get("product_id")
+        quantity = request.GET.get("quantity")
+
+        product = LemonadeProduct.objects.get(pk=product_id)
+        sale_id = goba_sale_list.id
+        goba_sale_list.appendSale(product_id, quantity)
+
+        sale_dict = {
+            'product': product.name,
+            'quantity': quantity,
+            'id': sale_id,
+        }
+
+        return JsonResponse(sale_dict)
+
+def remove(request):
+    if request.method == "GET":
+        goba_sale_id = request.GET.get("id")
+        goba_sale_list.removeSale(goba_sale_id)
+
+        return HttpResponse(goba_sale_id)
 
 def report(request):
     context = {}
