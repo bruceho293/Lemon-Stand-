@@ -36,7 +36,7 @@
 
 {% block javascript %}
     $('#add_button').click(function(){
-          var product_id = $('#id_product_id').children("option:selected").val();
+          var product_id = $('#id_product').children("option:selected").val();
           var quantity = $('#id_quantity').val();
 
           $.ajax(
@@ -44,7 +44,7 @@
               type:"GET",
               url: "{% url 'sales:addSale' %}",
               data: {
-                product_id: product_id,
+                product: product_id,
                 quantity: quantity,
               },
               success: function(response)

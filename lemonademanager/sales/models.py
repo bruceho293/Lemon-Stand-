@@ -35,23 +35,23 @@ class Commission(models.Model):
         return "{} with commission {}".format(self.staff, self.sale_commission)
 
 class Sale(models.Model):
-    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(LemonadeProduct, on_delete=models.DO_NOTHING)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    product = models.ForeignKey(LemonadeProduct, on_delete=models.DO_NOTHING)
     quantity = models.IntegerField(default=1)
     date_sale = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} with Product {}".format(self.staff_id, self.product_id)
+        return "{} with Product {}".format(self.staff, self.product)
 
     # Get the total price (profit) of this Sale
     @property
     def get_price(self):
-        return "%.2f" % (self.product_id.price * self.quantity)
+        return "%.2f" % (self.product.price * self.quantity)
         # return self.product_id.price * self.quantity
 
     # Get the commission of the staff from this sale based on the corresponding commission and the date of the sale.
     @property
     def get_staff_commission(self):
-        commission = Commission.objects.filter(staff=self.staff_id, date_applied__lte=self.date_sale).latest('date_applied')
-        return "%.2f" % (self.product_id.price * self.quantity * (commission.sale_commission / 100))
+        commission = Commission.objects.filter(staff=self.staff, date_applied__lte=self.date_sale).latest('date_applied')
+        return "%.2f" % (self.product.price * self.quantity * (commission.sale_commission / 100))
         # return self.product_id.price * self.quantity * (commission.sale_commission / 100)

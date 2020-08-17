@@ -9,10 +9,10 @@ class SalesForm(forms.ModelForm):
 
     class Meta:
         model = Sale
-        fields = ['staff_id', 'product_id', 'quantity']
+        fields = ['staff', 'product', 'quantity']
         labels = {
-            'staff_id': "Staff",
-            'product_id': "Product",
+            'staff': "Staff",
+            'product': "Product",
         }
 
     def clean(self):
@@ -27,17 +27,12 @@ class ReportForm(forms.ModelForm):
 
     class Meta:
         model = Sale
-        fields = ['staff_id', 'start_date', 'end_date']
+        fields = ['staff', 'start_date', 'end_date']
         labels = {
-            'staff_id': "Staff\'s Name and ID"
+            'staff': "Staff\'s Name and ID"
         }
 
     def clean(self):
         cleaned_data = super(ReportForm, self).clean()
         if cleaned_data.get('start_date') > cleaned_data.get('end_date'):
             raise ValidationError("Impossible date range.")
-
-class SecondSalesForm(forms.Form):
-    staff_id = forms.ModelChoiceField(label="Staff ID", queryset=Staff.objects.all());
-    product = forms.CharField(max_length=30);
-    quantity = forms.IntegerField();

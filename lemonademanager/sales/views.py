@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Sum
 
 from .models import LemonadeProduct, Sale
-from .forms import SalesForm, ReportForm, SecondSalesForm
+from .forms import SalesForm, ReportForm
 from decimal import Decimal
 # Create your views here.
 
@@ -40,14 +40,14 @@ def form(request):
         if form.is_valid():
             messages.success(request, "Sale submission successfully.")
             form.save()
-            staff_id = form.cleaned_data['staff_id']
+            staff = form.cleaned_data['staff']
             sales = goba_sale_list.toListRepresentation()
 
             for sale in sales:
                 product_id = sale.get('product_id')
                 product_ins = LemonadeProduct.objects.get(pk=product_id)
                 quantity = sale.get('quantity')
-                s = Sale(staff_id=staff_id, product_id=product_ins, quantity=quantity)
+                s = Sale(staff=staff, product=product_ins, quantity=quantity)
                 s.save()
 
             return redirect("sales:form")
@@ -60,7 +60,7 @@ def form(request):
 
 def add(request):
     if request.method == "GET":
-        product_id = request.GET.get("product_id")
+        product_id = request.GET.get("product")
         quantity = request.GET.get("quantity")
 
         product = LemonadeProduct.objects.get(pk=product_id)
@@ -92,11 +92,11 @@ def report(request):
         # with staff_id and in range of start_date and end_date
         #  (start_date <= dates in history <= end_date)
         if form.is_valid():
-            staff_id = form.cleaned_data['staff_id']
+            staff = form.cleaned_data['staff']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             sales_report = Sale.objects.filter(
-                staff_id=staff_id,
+                staff=staff,
                 date_sale__gte=start_date,
                 date_sale__lte=end_date,
             ).order_by("date_sale")
@@ -113,7 +113,7 @@ def report(request):
                 sale_dict = {}
                 first_sale = sales_report[0]
                 sale_dict['date'] = first_sale.date_sale
-                sale_dict['list_of_products'] = "{} {}".format(str(first_sale.quantity), str(first_sale.product_id))
+                sale_dict['list_of_products'] = "{} {}".format(str(first_sale.quantity), str(first_sale.product))
                 sale_dict['total_price'] = Decimal(first_sale.get_price)
                 sale_dict['commission'] = Decimal(first_sale.get_staff_commission)
                 modified_sale_report.append(sale_dict)
@@ -126,13 +126,13 @@ def report(request):
                     latest_sale = modified_sale_report[-1]
                     if sale != sales_report[0]:
                         if (sale.date_sale - latest_sale['date']).total_seconds() <= 59:
-                            temp_sale['list_of_products'] = latest_sale['list_of_products'] + ", " + "{} {}".format(str(sale.quantity), str(sale.product_id))
+                            temp_sale['list_of_products'] = latest_sale['list_of_products'] + ", " + "{} {}".format(str(sale.quantity), str(sale.product))
                             temp_sale['total_price'] = latest_sale['total_price'] + Decimal(sale.get_price)
                             temp_sale['commission'] = latest_sale['commission'] + Decimal(sale.get_staff_commission)
                             latest_sale.update(temp_sale)
                         else:
                             temp_sale['date'] = sale.date_sale
-                            temp_sale['list_of_products'] = "{} {}".format(str(sale.quantity), str(sale.product_id))
+                            temp_sale['list_of_products'] = "{} {}".format(str(sale.quantity), str(sale.product))
                             temp_sale['total_price'] = Decimal(sale.get_price)
                             temp_sale['commission'] = Decimal(sale.get_staff_commission)
                             modified_sale_report.append(temp_sale)
